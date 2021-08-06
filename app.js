@@ -22,13 +22,13 @@ function newPow(circleX, circleY){
 
 function checkCoords() {
 if (mouseY - circleY < 100 && mouseX - circleX < 100) {
-    if (mouseX - circleX > 0 && newPow(circleX - 5, circleY) <= border)
+    if (mouseX - circleX > 0 && newPow(circleX - 5, circleY) < border)
         circleX -= 5;
-    if (mouseX - circleX < 0 && newPow(circleX + 5, circleY) <= border)
+    if (mouseX - circleX < 0 && newPow(circleX + 5, circleY) < border)
         circleX += 5;
-    if ( mouseY - circleY > 0 && newPow(circleX, circleY - 5) <= border)
+    if (mouseY - circleY > 0 && newPow(circleX, circleY - 5) < border)
         circleY -= 5;
-    if (mouseY - circleY < 0 && newPow(circleX, circleY + 5) <= border)
+    if (mouseY - circleY < 0 && newPow(circleX, circleY + 5) < border)
         circleY += 5;
 }
 }
@@ -38,8 +38,8 @@ function drawCircle () {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.beginPath()
     ctx.arc(circleX , circleY , radius, 0, Math.PI * 2, true)
-    ctx.strokeStyle = '#6858e8'
-    ctx.fillStyle = '#617bff'
+    ctx.strokeStyle = '#586be8'
+    ctx.fillStyle = '#3a56ec'
     ctx.fill()
     ctx.stroke()
     ctx.closePath()
