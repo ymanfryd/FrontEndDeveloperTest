@@ -1,0 +1,12 @@
+body {
+  background: #8EB3D0FF;
+}
+
+svg {
+  position: absolute;
+  stroke: #383778;
+  stroke-width: 10px;
+}
+canvas {
+  color: darkred;
+}
