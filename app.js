@@ -38,8 +38,8 @@ function drawCircle () {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.beginPath()
     ctx.arc(circleX , circleY , radius, 0, Math.PI * 2, true)
-    ctx.strokeStyle = '#074ca1'
-    ctx.fillStyle = canvas.color
+    ctx.strokeStyle = '#6858e8'
+    ctx.fillStyle = '#617bff'
     ctx.fill()
     ctx.stroke()
     ctx.closePath()
