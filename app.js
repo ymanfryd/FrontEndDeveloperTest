@@ -1,14 +1,15 @@
 const button = document.querySelector('button')
 const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
-let mouseX,
+let bonusFlag = false,
+mouseX,
 mouseY,
 radius = 40,
 center = 400,
 circleX = 400,
 circleY = 400,
 border = 255,
-bonusFlag = false
+runDistance = 5
 
 window.addEventListener('mousemove', (event) => {
     mouseY = event.clientY
@@ -17,20 +18,17 @@ window.addEventListener('mousemove', (event) => {
 })
 
 button.addEventListener('click', () =>{
-    if (!bonusFlag)
-        bonusFlag = true
-    else
-        bonusFlag = false
+    bonusFlag = !bonusFlag;
 })
 
-function newPow(circleX, circleY){
-   let newPow = Math.sqrt((( circleX - center) ** 2) + ((circleY - center) ** 2))
-    return(newPow)
+function getDist(x1, y1, x2, y2){
+	let dist = Math.sqrt(((x1 - x2) ** 2) + ((y1 - y2) ** 2))
+	return(dist)
 }
 
 function checkCoords() {
-    let factor = border / newPow(mouseX, mouseY)
-    if (newPow(mouseX, mouseY) < border) {
+    let factor = border / getDist(mouseX, mouseY, center, center)
+    if (getDist(mouseX, mouseY, center, center) < border) {
         circleX = mouseX;
         circleY = mouseY;
     } else {
@@ -40,16 +38,21 @@ function checkCoords() {
 }
 
 function checkCoordsBonus() {
-if (mouseY - circleY < 100 && mouseX - circleX < 100) {
-    if (mouseX - circleX > 0 && newPow(circleX - 5, circleY) < border)
-        circleX -= 5;
-    if (mouseX - circleX < 0 && newPow(circleX + 5, circleY) < border)
-        circleX += 5;
-    if (mouseY - circleY > 0 && newPow(circleX, circleY - 5) < border)
-        circleY -= 5;
-    if (mouseY - circleY < 0 && newPow(circleX, circleY + 5) < border)
-        circleY += 5;
-}
+    let vectorX = mouseX - circleX,
+    vectorY = mouseY - circleY
+    let dist = getDist(circleX, circleY, mouseX, mouseY)
+    if (dist < 150 && dist > 0)
+        runDistance = 5 * 150 / Math.max(dist, 15)
+	if (dist < 150) {
+		if (vectorX > 0 && getDist(circleX - runDistance, circleY, center, center) < border)
+			circleX -= runDistance;
+		if (vectorX < 0 && getDist(circleX + runDistance, circleY ,center, center) < border)
+			circleX += runDistance;
+		if (vectorY > 0 && getDist(circleX, circleY - runDistance,center, center) < border)
+			circleY -= runDistance;
+		if (vectorY < 0 && getDist(circleX, circleY + runDistance,center, center) < border)
+			circleY += runDistance;
+	}
 }
 
 function drawCircle () {
